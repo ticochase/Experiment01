@@ -92,16 +92,22 @@ public class Main {
             lastSchedule = lines.get(lines.size() - 1);
         } else {
             lastSchedule = generateRandomSchedule();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile))) {
-                writer.write(lastSchedule + "\n");
+            try (PrintWriter writer = new PrintWriter(new FileWriter(logFile))) {
+                writer.println(lastSchedule);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         String newSchedule = generateRandomSchedule();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
-            writer.write("\n" + newSchedule);
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
+            if (lines.size() == 1) {
+                writer.print(newSchedule);
+            }
+            else {
+                writer.println();
+                writer.print(newSchedule);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
